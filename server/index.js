@@ -1,7 +1,17 @@
 const webSocket = require("ws");
 
+const express = require("express");
+const path = require("path");
+const app = express();
+app.use("/", express.static(path.resolve(__dirname, "../client")));
+//xpress returns http server when u start listen
+const server = app.listen(9876);
+
 const wss = new webSocket.Server({
-  port: 9876,
+  server,
+  verifyClient: (info) => {
+    return false;
+  },
 });
 
 console.log(`websocket ready`);
